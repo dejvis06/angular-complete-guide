@@ -35,6 +35,5 @@ export class TasksComponent {
 
   addTask(task: Task) {
     this.tasks.push(task);
-    console.log(this.tasks);
   }
 }
