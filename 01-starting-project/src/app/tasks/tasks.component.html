@@ -2,7 +2,14 @@
   <header>
     <h2>{{ name }}'s Tasks</h2>
     <menu>
-      <button>Add Task</button>
+      @if (isAddingTask) {
+      <app-new-task
+        (completed)="closeAddTask()"
+        (taskOutput)="addTask($event)"
+        [userId]="userId"
+      ></app-new-task>
+      }
+      <button (click)="openAddTask()">Add Task</button>
     </menu>
   </header>
   <ul>
