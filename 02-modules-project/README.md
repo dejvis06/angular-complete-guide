@@ -25,6 +25,8 @@
 
 ### `declarations` & `bootstrap`
 
+In the declarations we specify the non standalone components. <br>
+
 After adding AppComponent in the declarations attribute of the NgModule, the following have to be removed in the AppComponent:
 
 ```
