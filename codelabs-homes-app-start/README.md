@@ -1,4 +1,5 @@
-# Angular Homes App
+# Angular Homes App (Angular Official Tutorials)
+
 - Install Angular if you don't have it installed
 
   `npm install -g @angular/cli`
@@ -13,8 +14,8 @@
 
 - Install the depencies
 
-  `npm install` 
+  `npm install`
 
-- Run the application 
+- Run the application
 
   `ng serve`
