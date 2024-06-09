@@ -1,8 +1,3 @@
-:host {
-  --primary-color: #605dc8;
-  --accent-color: rgb(224, 218, 218);
-}
-
 .listing {
   background: var(--accent-color);
   border-radius: 30px;
@@ -24,6 +19,7 @@
 .listing-location::before {
   content: url("/assets/location-pin.svg") / "";
 }
+
 section.listing a {
   padding-left: 20px;
   text-decoration: none;
