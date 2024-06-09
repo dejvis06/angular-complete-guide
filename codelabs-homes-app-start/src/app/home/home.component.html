@@ -2,5 +2,9 @@
   <form>
     <input type="text" placeholder="Filter by city" />
     <button class="primary" type="button">Search</button>
+    <app-housing-location
+      *ngFor="let housingLocation of housingLocationList"
+      [housingLocation]="housingLocation"
+    />
   </form>
 </section>
