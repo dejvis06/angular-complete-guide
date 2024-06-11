@@ -19,3 +19,7 @@
 - Run the application
 
   `ng serve`
+
+- Http
+  - `npm install -g json-server`
+  - `json-server --watch db.json`
