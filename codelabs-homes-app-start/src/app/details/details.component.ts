@@ -39,7 +39,7 @@ export class DetailsComponent {
           this.housingLocation = houseLocation;
         });
     } finally {
-      this.isLoading = false;
+      //this.isLoading = false;
     }
   }
 
