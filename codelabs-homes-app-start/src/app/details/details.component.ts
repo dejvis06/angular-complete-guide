@@ -29,7 +29,7 @@ export class DetailsComponent {
 
     this.housingService
       .getHousingLocationById(this.housingLocationId)
-      .then((housingLocation: HousingLocation | undefined) => {
+      .subscribe((housingLocation: HousingLocation | undefined) => {
         this.housingLocation = housingLocation;
       });
   }
