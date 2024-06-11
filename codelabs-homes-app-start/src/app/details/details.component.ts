@@ -27,7 +27,7 @@ export class DetailsComponent {
     email: new FormControl(""),
   });
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor() {
     this.housingLocationId = Number(this.route.snapshot.params["id"]);
     this.housingService
       .getHousingLocationById(this.housingLocationId)
