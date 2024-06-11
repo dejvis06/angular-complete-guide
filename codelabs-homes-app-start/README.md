@@ -52,7 +52,6 @@ Implementations:
 #### Get
 
 ```
-
 <!-- Sending Request -->
 getAllHousingLcoations(): Observable<HousingLocation[]> {
   return this.http.get<HousingLocation[]>(this.getResourcePath());
@@ -69,3 +68,5 @@ constructor() {
      });
 }
 ```
+
+####

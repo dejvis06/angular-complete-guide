@@ -1,9 +1,10 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { HousingService } from "../housing.service";
 import { HousingLocation } from "../housinglocation";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { Observable, delay, firstValueFrom, lastValueFrom } from "rxjs";
 
 @Component({
   selector: "app-details",
@@ -17,6 +18,8 @@ export class DetailsComponent {
   housingLocationId = 0;
   housingLocation?: HousingLocation;
   housingService: HousingService = inject(HousingService);
+  housingLocationObservable?: Observable<HousingLocation | undefined>;
+  isLoading: Boolean = true;
 
   applyForm = new FormGroup({
     firstName: new FormControl(""),
@@ -24,13 +27,13 @@ export class DetailsComponent {
     email: new FormControl(""),
   });
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.housingLocationId = Number(this.route.snapshot.params["id"]);
-
     this.housingService
       .getHousingLocationById(this.housingLocationId)
-      .subscribe((housingLocation: HousingLocation | undefined) => {
-        this.housingLocation = housingLocation;
+      .subscribe((houseLocation) => {
+        this.housingLocation = houseLocation;
+        this.isLoading = false;
       });
   }
 
