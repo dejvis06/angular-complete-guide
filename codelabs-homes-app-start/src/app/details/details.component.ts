@@ -27,14 +27,20 @@ export class DetailsComponent {
     email: new FormControl(""),
   });
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit(): void {
     this.housingLocationId = Number(this.route.snapshot.params["id"]);
-    this.housingService
-      .getHousingLocationById(this.housingLocationId)
-      .subscribe((houseLocation) => {
-        this.housingLocation = houseLocation;
-        this.isLoading = false;
-      });
+
+    try {
+      this.housingService
+        .getHousingLocationById(this.housingLocationId)
+        .subscribe((houseLocation) => {
+          this.housingLocation = houseLocation;
+        });
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   submitApplication() {

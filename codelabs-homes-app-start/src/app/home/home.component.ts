@@ -16,7 +16,9 @@ export class HomeComponent {
   housingLocationList!: HousingLocation[];
   filteredHousingLocationList: HousingLocation[] = [];
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit(): void {
     this.housingService
       .getAllHousingLcoations()
       .subscribe((housingLocationList: HousingLocation[]) => {
