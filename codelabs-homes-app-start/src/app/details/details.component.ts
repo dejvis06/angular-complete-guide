@@ -4,12 +4,19 @@ import { ActivatedRoute } from "@angular/router";
 import { HousingService } from "../housing.service";
 import { HousingLocation } from "../housinglocation";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { Observable, delay, firstValueFrom, lastValueFrom } from "rxjs";
+import { Observable } from "rxjs";
+import { LoadingSpinnerComponent } from "../interceptors/loading-spinner/loading-spinner.component";
+import { LoadingSpinnerDirective } from "../interceptors/loading-spinner/loading-spinner.directive";
 
 @Component({
   selector: "app-details",
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    LoadingSpinnerComponent,
+    LoadingSpinnerDirective,
+  ],
   templateUrl: "./details.component.html",
   styleUrls: ["./details.component.css"],
 })
@@ -19,7 +26,6 @@ export class DetailsComponent {
   housingLocation?: HousingLocation;
   housingService: HousingService = inject(HousingService);
   housingLocationObservable?: Observable<HousingLocation | undefined>;
-  isLoading: Boolean = true;
 
   applyForm = new FormGroup({
     firstName: new FormControl(""),
@@ -32,15 +38,11 @@ export class DetailsComponent {
   ngOnInit(): void {
     this.housingLocationId = Number(this.route.snapshot.params["id"]);
 
-    try {
-      this.housingService
-        .getHousingLocationById(this.housingLocationId)
-        .subscribe((houseLocation) => {
-          this.housingLocation = houseLocation;
-        });
-    } finally {
-      //this.isLoading = false;
-    }
+    this.housingService
+      .getHousingLocationById(this.housingLocationId)
+      .subscribe((houseLocation) => {
+        this.housingLocation = houseLocation;
+      });
   }
 
   submitApplication() {
