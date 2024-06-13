@@ -4,9 +4,11 @@ import { ActivatedRoute } from "@angular/router";
 import { HousingService } from "../housing.service";
 import { HousingLocation } from "../housinglocation";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { LoadingSpinnerComponent } from "../interceptors/loading-spinner/loading-spinner.component";
 import { LoadingSpinnerDirective } from "../interceptors/loading-spinner/loading-spinner.directive";
+import { ApplyForm } from "./apply-form";
+import { InvalidFormModalComponent } from "../invalid-form-modal/invalid-form-modal.component";
 
 @Component({
   selector: "app-details",
@@ -16,6 +18,7 @@ import { LoadingSpinnerDirective } from "../interceptors/loading-spinner/loading
     ReactiveFormsModule,
     LoadingSpinnerComponent,
     LoadingSpinnerDirective,
+    InvalidFormModalComponent,
   ],
   templateUrl: "./details.component.html",
   styleUrls: ["./details.component.css"],
@@ -27,13 +30,9 @@ export class DetailsComponent {
   housingService: HousingService = inject(HousingService);
   housingLocationObservable?: Observable<HousingLocation | undefined>;
 
-  applyForm = new FormGroup({
-    firstName: new FormControl(""),
-    lastName: new FormControl(""),
-    email: new FormControl(""),
-  });
-
-  constructor() {}
+  applyForm: ApplyForm = new ApplyForm();
+  formValueSubscription?: Subscription;
+  formInvalid: boolean = false;
 
   ngOnInit(): void {
     this.housingLocationId = Number(this.route.snapshot.params["id"]);
@@ -43,13 +42,32 @@ export class DetailsComponent {
       .subscribe((houseLocation) => {
         this.housingLocation = houseLocation;
       });
+
+    this.formValueSubscription = this.applyForm.form.valueChanges.subscribe(
+      (form) => {
+        console.log(form);
+      }
+    );
   }
 
+  constructor() {}
+
   submitApplication() {
-    this.housingService.submitApplication(
-      this.applyForm.value.firstName ?? "",
-      this.applyForm.value.lastName ?? "",
-      this.applyForm.value.email ?? ""
-    );
+    this.formInvalid = this.applyForm.validate();
+    if (!this.formInvalid) {
+      this.housingService.submitApplication(
+        this.applyForm.form.value.firstName ?? "",
+        this.applyForm.form.value.lastName ?? "",
+        this.applyForm.form.value.email ?? ""
+      );
+    }
+  }
+
+  clear() {
+    this.applyForm.clear();
+  }
+
+  closeModal() {
+    this.formInvalid = false;
   }
 }
