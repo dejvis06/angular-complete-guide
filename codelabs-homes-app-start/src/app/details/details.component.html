@@ -22,13 +22,44 @@
   </section>
   <section class="listing-apply">
     <h2 class="section-heading">Apply now to live here</h2>
-    <form [formGroup]="applyForm.form" (submit)="submitApplication()">
+    <form
+      *ngIf="applyForm.form"
+      [formGroup]="applyForm.form"
+      (submit)="submitApplication()"
+    >
       <label for="first-name">First Name</label>
       <input id="first-name" type="text" formControlName="firstName" />
+      <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+        <div *ngIf="firstName.hasError('required')" class="error-message">
+          First Name is required.
+        </div>
+        <div *ngIf="firstName.hasError('minlength')" class="error-message">
+          First Name must be at least 4 characters long.
+        </div>
+        <div *ngIf="firstName.hasError('forbiddenName')" class="error-message">
+          No numbers allowed Robocop!
+        </div>
+      </div>
+
       <label for="last-name">Last Name</label>
       <input id="last-name" type="text" formControlName="lastName" />
+      <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+        <div *ngIf="lastName.hasError('required')" class="error-message">
+          Last Name is required.
+        </div>
+      </div>
+
       <label for="email">Email</label>
       <input id="email" type="email" formControlName="email" />
+      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+        <div *ngIf="email.hasError('required')" class="error-message">
+          Email is required.
+        </div>
+        <div *ngIf="email.hasError('email')" class="error-message">
+          Invalid email format.
+        </div>
+      </div>
+
       <button type="button" (click)="clear()">Clear</button>
       <button type="submit" class="primary">Apply now</button>
     </form>

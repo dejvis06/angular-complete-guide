@@ -30,11 +30,12 @@ export class DetailsComponent {
   housingService: HousingService = inject(HousingService);
   housingLocationObservable?: Observable<HousingLocation | undefined>;
 
-  applyForm: ApplyForm = new ApplyForm();
+  applyForm!: ApplyForm;
   formValueSubscription?: Subscription;
   formInvalid: boolean = false;
 
   ngOnInit(): void {
+    this.applyForm = new ApplyForm();
     this.housingLocationId = Number(this.route.snapshot.params["id"]);
 
     this.housingService
@@ -65,6 +66,18 @@ export class DetailsComponent {
 
   clear() {
     this.applyForm.clear();
+  }
+
+  get firstName() {
+    return this.applyForm.form.get("firstName")!;
+  }
+
+  get lastName() {
+    return this.applyForm.form.get("lastName")!;
+  }
+
+  get email() {
+    return this.applyForm.form.get("email")!;
   }
 
   closeModal() {
