@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { HousingService } from "../housing.service";
 import { HousingLocation } from "../housinglocation";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
@@ -25,6 +25,7 @@ import { InvalidFormModalComponent } from "../invalid-form-modal/invalid-form-mo
 })
 export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
+  router: Router = inject(Router);
   housingLocationId = 0;
   housingLocation?: HousingLocation;
   housingService: HousingService = inject(HousingService);
@@ -65,6 +66,7 @@ export class DetailsComponent {
         this.applyForm.form.value.lastName ?? "",
         this.applyForm.form.value.email ?? ""
       );
+      this.router.navigate(["/"]);
     }
   }
 
