@@ -1,6 +1,6 @@
 import { bootstrapApplication } from "@angular/platform-browser";
 import { AppComponent } from "./app/app.component";
-import { provideRouter } from "@angular/router";
+import { provideRouter, withComponentInputBinding } from "@angular/router";
 import routeConfig from "./app/routes";
 import {
   HTTP_INTERCEPTORS,
@@ -14,7 +14,7 @@ import { LoadingSpinnerInterceptor } from "./app/interceptors/loading-spinner/lo
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routeConfig),
+    provideRouter(routeConfig, withComponentInputBinding()),
     provideHttpClient(
       withInterceptors([
         loggingInterceptor,

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { HousingService } from "../housing.service";
@@ -34,9 +34,13 @@ export class DetailsComponent {
   formValueSubscription?: Subscription;
   formInvalid: boolean = false;
 
+  @Input()
+  set id(id: number) {
+    this.housingLocationId = id;
+  }
+
   ngOnInit(): void {
     this.applyForm = new ApplyForm();
-    this.housingLocationId = Number(this.route.snapshot.params["id"]);
 
     this.housingService
       .getHousingLocationById(this.housingLocationId)
